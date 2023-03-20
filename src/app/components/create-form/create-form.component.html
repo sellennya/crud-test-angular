@@ -1,0 +1,160 @@
+<h3>Add Form</h3>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path
+      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+    />
+  </symbol>
+</svg>
+
+<div
+  class="alert alert-success alert-dismissible fade show"
+  role="alert"
+  *ngIf="alertMessage"
+>
+  <svg
+    class="bi flex-shrink-0 me-2"
+    width="24"
+    height="24"
+    role="img"
+    aria-label="Success:"
+  >
+    <use xlink:href="#check-circle-fill" />
+  </svg>
+  Form submitted.
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+    (click)="closeAlert()"
+  ></button>
+</div>
+<form [formGroup]="addForm" (ngSubmit)="submitData()">
+  <div class="mb-3">
+    <label for="firstName" class="form-label">First Name</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Enter First Name"
+      formControlName="firstName"
+    />
+    <div
+      *ngIf="
+        validateForm['firstName'].invalid && validateForm['firstName'].touched
+      "
+      class="error"
+    >
+      <div *ngIf="validateForm['firstName'].errors?.['required']">
+        First name is required
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Enter Last Name"
+      formControlName="lastName"
+    />
+    <div
+      *ngIf="
+        validateForm['lastName'].invalid && validateForm['lastName'].touched
+      "
+      class="error"
+    >
+      <div *ngIf="validateForm['lastName'].errors?.['required']">
+        Last name is required
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="birthDate" class="form-label">Date of Birth</label>
+    <input type="date" class="form-control" formControlName="birthDate" />
+    <div
+      *ngIf="
+        validateForm['birthDate'].invalid && validateForm['birthDate'].touched
+      "
+      class="error"
+    >
+      <div *ngIf="validateForm['birthDate'].errors?.['required']">
+        Birthdate is required
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="mobileNumber" class="form-label">Mobile Number</label>
+    <input
+      type="number"
+      class="form-control"
+      placeholder="9xxxxxxxx"
+      formControlName="mobileNumber"
+    />
+    <div
+      *ngIf="
+        validateForm['mobileNumber'].invalid &&
+        validateForm['mobileNumber'].touched
+      "
+      class="error"
+    >
+      <div *ngIf="validateForm['mobileNumber'].errors?.['required']">
+        Mobile number is required
+      </div>
+      <div *ngIf="validateForm['mobileNumber'].errors?.['pattern']">
+        Mobile number is invalid
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input
+      type="email"
+      class="form-control"
+      placeholder="example@mail.com"
+      formControlName="email"
+      uniqueEmail
+    />
+    <div
+      *ngIf="validateForm['email'].invalid && validateForm['email'].touched"
+      class="error"
+    >
+      <div *ngIf="validateForm['email'].errors?.['required']">
+        Email is required
+      </div>
+      <div *ngIf="validateForm['email'].errors?.['email'] ">
+        Email is invalid
+      </div>
+      <div *ngIf="validateForm['email'].errors?.['uniqueEmail']">
+        Email already exists
+      </div>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="bankAccount" class="form-label">Bank Account</label>
+    <input
+      type="number"
+      class="form-control"
+      placeholder="Enter Bank Account"
+      formControlName="bankAccount"
+    />
+    <div
+      *ngIf="
+        validateForm['bankAccount'].invalid &&
+        validateForm['bankAccount'].touched
+      "
+      class="error"
+    >
+      <div *ngIf="validateForm['bankAccount'].errors?.['required']">
+        Bank account number is required
+      </div>
+      <div *ngIf="validateForm['bankAccount'].errors?.['pattern']">
+        Bank account number must have 12 digits
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="addForm.invalid">
+    Submit
+  </button>
+</form>
